@@ -84,6 +84,23 @@ The data validation fails the build if any syllabus item is missing, an id colli
 URL is malformed. The UI tests boot the real `index.html` and check rendering, tab switching,
 search, marking topics done, reload, reset and deep links.
 
+## Releases (the APK on GitHub Releases)
+
+A GitHub Actions workflow (`.github/workflows/release.yml`) builds the signed APK and attaches it
+to a GitHub Release automatically. Just push a version tag:
+
+```bash
+git tag v1.0.1
+git push origin v1.0.1
+```
+
+Within a few minutes the **Releases** page of the repo shows *CodePath v1.0.1* with
+`codepath-v1.0.1.apk` as a download asset. You can also start it by hand: **Actions →
+Build & attach APK to release → Run workflow**, type the tag (e.g. `v1.0.1`) and run it.
+
+The release workflow runs `npm run test:all` first and refuses to publish if anything fails.
+Tags containing a `-` (e.g. `v1.0.1-beta`) are marked as pre-releases.
+
 ## Project layout
 
 ```

@@ -1,0 +1,60 @@
+# Builds the CodePath APK and attaches it to a GitHub Release.
+#
+# Run it by pushing a tag:
+#   git tag v1.0.1 && git push origin v1.0.1
+#
+# Or trigger it manually (Actions → Build & attach APK to release → Run workflow)
+# and it will create/refresh a draft release for the tag you type in.
+
+name: Build & attach APK to release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing tag to release (e.g. v1.0.1)'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Resolve tag
+        id: tag
+        run: |
+          if [ -n "${{ github.event.inputs.tag }}" ]; then
+            echo "tag=${{ github.event.inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "tag=${GITHUB_REF_NAME}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run checks and tests
+        run: npm run test:all
+
+      - name: Build the APK
+        run: node tools/build-android.mjs
+
+      - name: Rename APK with the version
+        run: |
+          cp codepath-debug.apk "codepath-${{ steps.tag.outputs.tag }}.apk"
+
+      - name: Attach APK to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: CodePath ${{ steps.tag.outputs.tag }}
+          draft: false
+          prerelease: ${{ contains(steps.tag.outputs.tag, '-') }}
+          files: codepath-${{ steps.tag.outputs.tag }}.apk

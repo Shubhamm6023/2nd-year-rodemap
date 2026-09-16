@@ -6,6 +6,7 @@ android/build/
 .android-sdk/
 *.apk
 *.keystore
+*.jks
 *.aab
 .DS_Store
 Thumbs.db
