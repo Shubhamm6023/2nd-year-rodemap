@@ -1,0 +1,12 @@
+node_modules/
+npm-debug.log*
+
+# android build output (regenerate with: npm run android:build)
+android/build/
+.android-sdk/
+*.apk
+*.keystore
+*.aab
+.DS_Store
+Thumbs.db
+*.log

@@ -1,0 +1,62 @@
+{
+  "name": "CodePath — Programming Roadmap",
+  "short_name": "CodePath",
+  "description": "Programming, DSA, Web, Java Backend, Database, CS Fundamentals, Tools and Projects — every topic linked to the best YouTube videos.",
+  "id": "/codepath/",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#080c1a",
+  "theme_color": "#080c1a",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "productivity", "developer"],
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Data Structures & Algorithms",
+      "short_name": "DSA",
+      "url": "./#dsa",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Projects",
+      "short_name": "Projects",
+      "url": "./#projects",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}

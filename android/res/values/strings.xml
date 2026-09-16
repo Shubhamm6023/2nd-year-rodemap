@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CodePath</string>
+    <string name="pick_backup">Choose a CodePath backup</string>
+    <string name="download_started">Downloading…</string>
+    <string name="use_export">This link cannot be saved here — use “Export backup” instead</string>
+    <string name="no_app_for_link">No app can open %1$s</string>
+</resources>

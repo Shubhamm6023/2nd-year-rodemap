@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the app's dark background, matching styles.css -->
+    <color name="brand_navy">#FF080C1A</color>
+    <!-- the gradient's first stop, also the adaptive icon background fallback -->
+    <color name="brand_indigo">#FF4F46E5</color>
+</resources>

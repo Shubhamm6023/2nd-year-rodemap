@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="CodePath">
+  <title>CodePath</title>
+  <defs>
+    <linearGradient id="cp-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#4f46e5"/>
+      <stop offset="0.55" stop-color="#7c3aed"/>
+      <stop offset="1" stop-color="#c026d3"/>
+    </linearGradient>
+    <radialGradient id="cp-glow" cx="0.28" cy="0.2" r="0.85">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="512" height="512" rx="113" fill="url(#cp-grad)"/>
+  <rect width="512" height="512" rx="113" fill="url(#cp-glow)"/>
+  <g fill="none" stroke="#ffffff" stroke-width="34" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M205 138 L131 256 L205 374"/>
+    <path d="M307 138 L381 256 L307 374"/>
+  </g>
+  <path d="M233 192 L233 320 L295 256 Z" fill="#fbbf24" stroke="#fbbf24" stroke-width="20" stroke-linejoin="round"/>
+</svg>

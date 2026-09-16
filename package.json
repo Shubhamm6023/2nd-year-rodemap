@@ -1,0 +1,27 @@
+{
+  "name": "codepath",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Programming roadmap app — 8 sections, 92 topics, every topic linked to the best YouTube videos. Installable PWA with an app icon.",
+  "scripts": {
+    "start": "node tools/serve.mjs",
+    "serve": "node tools/serve.mjs",
+    "check": "node --check js/data.js && node --check js/core.js && node --check js/app.js && node --check sw.js && node --check tools/serve.mjs && node --check tools/build-android.mjs && node tools/check-assets.mjs && node tools/check-android.mjs",
+    "android:build": "node tools/build-android.mjs",
+    "android:check": "node tools/check-android.mjs",
+    "android:icons": "node tools/make-icons.mjs",
+    "test": "node --test tools/core.test.cjs && node tools/validate-data.mjs",
+    "test:ui": "node --test tools/ui.test.cjs",
+    "test:all": "npm run check && npm test && npm run test:ui",
+    "icons": "node tools/make-icons.mjs",
+    "android": "node tools/check-android.mjs && node tools/build-android.mjs"
+  },
+  "keywords": ["roadmap", "programming", "dsa", "youtube", "pwa", "learning"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "jsdom": "^30.0.1"
+  }
+}

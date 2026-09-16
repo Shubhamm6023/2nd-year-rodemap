@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CodePath — Programming Roadmap with the Best YouTube Videos</title>
+<meta name="description" content="A complete programming roadmap: Programming, DSA, Web Development, Java Backend, Database, CS Fundamentals, Tools and Projects — every topic linked to the best YouTube videos.">
+<meta name="theme-color" content="#080c1a">
+<meta name="color-scheme" content="dark light">
+
+<link rel="manifest" href="app.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="icon" href="icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="CodePath">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#content">Skip to the topic list</a>
+
+<div class="wrap">
+  <header class="topbar">
+    <div class="brand">
+      <img src="icons/icon.svg" width="44" height="44" alt="">
+      <div class="brand-text">
+        <h1>CodePath</h1>
+        <p id="brandTagline">Programming roadmap + the best YouTube videos</p>
+      </div>
+    </div>
+    <div class="actions">
+      <button id="btnReload" class="btn btn-primary" type="button" title="Reload the topic list and clear all filters">
+        <span aria-hidden="true">🔄</span><span class="btn-label">Reload</span>
+      </button>
+      <button id="btnRefresh" class="btn" type="button" title="Refresh the whole page">
+        <span aria-hidden="true">♻️</span><span class="btn-label">Refresh page</span>
+      </button>
+      <button id="btnInstall" class="btn" type="button" title="Install CodePath as an app" hidden>
+        <span aria-hidden="true">⬇️</span><span class="btn-label">Install app</span>
+      </button>
+      <button id="btnTheme" class="btn" type="button" title="Switch to light theme">
+        <span class="btn-icon" aria-hidden="true">☀️</span><span class="btn-label">Light</span>
+      </button>
+    </div>
+  </header>
+
+  <section class="stats" aria-label="Your progress">
+    <div class="ring">
+      <svg viewBox="0 0 66 66" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="ringGradient" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#6366f1"></stop>
+            <stop offset="0.6" stop-color="#a855f7"></stop>
+            <stop offset="1" stop-color="#ec4899"></stop>
+          </linearGradient>
+        </defs>
+        <circle class="track" cx="33" cy="33" r="28"></circle>
+        <circle id="ringValue" class="value" cx="33" cy="33" r="28" stroke-dasharray="176" stroke-dashoffset="176"></circle>
+      </svg>
+      <b id="ringText">0%</b>
+    </div>
+    <div class="stats-text">
+      <strong id="statText">Loading your progress…</strong>
+      <div class="bar" role="progressbar" aria-labelledby="statText"><span id="statBar"></span></div>
+      <small id="statHint">Tap any card to open its videos on YouTube.</small>
+    </div>
+    <div class="stats-actions">
+      <button id="btnContinue" class="btn btn-primary" type="button" hidden>▶ Continue</button>
+      <button id="btnReset" class="btn btn-danger" type="button">Reset progress</button>
+    </div>
+  </section>
+
+  <div class="controls">
+    <div class="search" role="search">
+      <span aria-hidden="true">🔍</span>
+      <input id="search" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search"
+             aria-label="Search topics" placeholder="Search topics — try “recursion”, “joins”, “docker”…">
+      <button id="btnClearSearch" class="clear-btn" type="button" aria-label="Clear search" hidden>✕</button>
+    </div>
+    <label class="toggle" for="hideDone">
+      <input type="checkbox" id="hideDone">
+      <span>Hide completed</span>
+    </label>
+  </div>
+
+  <nav class="tabs" id="tabs" aria-label="Filter by section">
+    <noscript>JavaScript is required to list the topics.</noscript>
+  </nav>
+
+  <main id="content" tabindex="-1"></main>
+
+  <footer class="foot">
+    <p><span id="footStats">CodePath</span></p>
+    <div class="foot-actions">
+      <button id="btnExport" class="btn btn-sm" type="button" title="Save your progress and favourites as a JSON file">
+        <span aria-hidden="true">💾</span><span class="btn-label">Export backup</span>
+      </button>
+      <button id="btnImport" class="btn btn-sm" type="button" title="Load progress and favourites from a JSON backup file">
+        <span aria-hidden="true">📂</span><span class="btn-label">Import backup</span>
+      </button>
+      <input id="importFile" class="sr-only" type="file" accept=".json,application/json" tabindex="-1" aria-hidden="true">
+    </div>
+    <p class="foot-note">links open YouTube in a new tab · installable, works offline · your data never leaves this device</p>
+  </footer>
+</div>
+
+<div id="toasts" class="toasts" aria-live="polite"></div>
+
+<script src="js/data.js"></script>
+<script src="js/core.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
