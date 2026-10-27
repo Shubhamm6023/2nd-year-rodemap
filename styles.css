@@ -15,8 +15,8 @@
   --text: #eef2ff;
   --text-dim: #a5b0d0;
   --text-faint: #7c88aa;
-  --accent: #818cf8;
-  --accent-2: #c084fc;
+  --accent: #a78bfa;
+  --accent-2: #f472b6;
   --amber: #fbbf24;
   --good: #34d399;
   --danger: #fb7185;
@@ -69,6 +69,12 @@ body::before {
   background:
     radial-gradient(58rem 30rem at 12% -8%, var(--bg-glow-1), transparent 65%),
     radial-gradient(52rem 28rem at 96% 4%, var(--bg-glow-2), transparent 62%);
+  animation: cp-glow 18s ease-in-out infinite alternate;
+}
+
+@keyframes cp-glow {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(2%, 3%) scale(1.05); }
 }
 
 .wrap {
@@ -135,6 +141,10 @@ a {
   font-size: 19px;
   letter-spacing: -0.02em;
   line-height: 1.15;
+  background: linear-gradient(120deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .brand p {
@@ -584,9 +594,10 @@ input:focus-visible {
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--section-color) 55%, transparent);
+  transform: translateY(-4px) scale(1.01);
+  border-color: color-mix(in srgb, var(--section-color) 65%, transparent);
   background: var(--surface-2);
+  box-shadow: 0 22px 46px -24px var(--section-color);
 }
 
 .card.is-done {

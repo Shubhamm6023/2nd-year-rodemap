@@ -1,0 +1,106 @@
+# Auto-create a draft PR from an issue when it is tagged.
+#
+# Add one of the labels below to an issue and this workflow:
+#   1. branches `fix/issue-<number>` off the default branch
+#   2. drops the issue title + number into a stub file so the PR is never empty
+#   3. pushes the branch and opens a *draft* PR linking back to the issue
+#
+# Draft PRs let a human land the real fix without merging a placeholder.
+# Re-running (label removed then re-added) updates the same PR instead of
+# leaving duplicates, because the branch name is deterministic.
+
+name: Issue → draft PR
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  pull_requests: write
+
+# Labels that trigger a PR. Add more here instead of editing the script.
+env:
+  TRIGGER_LABELS: '["auto-pr","needs-pr","fix-me","wontfix"]'
+
+jobs:
+  open-pr:
+    # Only act when the label that was *just added* is one we care about.
+    if: ${{ contains(fromJSON(env.TRIGGER_LABELS), github.event.label.name) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure git identity
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Set up GH CLI authentication
+        run: echo "GH_TOKEN=${{ github.token }}" >> "$GITHUB_ENV"
+
+      - name: Decide branch + PR title
+        id: meta
+        run: |
+          echo "branch=fix/issue-${{ github.event.issue.number }}" >> "$GITHUB_OUTPUT"
+          echo "title=fix: ${{ github.event.issue.title }}" >> "$GITHUB_OUTPUT"
+
+      - name: Create the fix branch (idempotent)
+        run: |
+          branch="${{ steps.meta.outputs.branch }}"
+          git fetch origin
+          if git show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+            git checkout "$branch"
+            echo "branch_exists=true" >> "$GITHUB_OUTPUT"
+          else
+            git checkout -b "$branch"
+            echo "branch_exists=false" >> "$GITHUB_OUTPUT"
+          fi
+        id: branch
+
+      - name: Drop a stub so the branch is never empty
+        run: |
+          mkdir -p .github/issue-fixes
+          num=${{ github.event.issue.number }}
+          title=${{ github.event.issue.title }}
+          url=${{ github.event.issue.html_url }}
+          body=${{ github.event.issue.body }}
+          cat > ".github/issue-fixes/issue-${num}.md" <<EOF
+          # Issue #${num}
+          ${url}
+
+          ## ${title}
+
+          ${body}
+          EOF
+          git add ".github/issue-fixes/issue-${num}.md"
+          git commit -m "chore: stub for issue #${num} (${title})" || echo "nothing to commit"
+
+      - name: Push the branch
+        run: git push -fu origin "${{ steps.meta.outputs.branch }}"
+
+      - name: Open (or update) a draft PR
+        run: |
+          branch="${{ steps.meta.outputs.branch }}"
+          title="${{ steps.meta.outputs.title }}"
+          body=$(cat <<EOF
+          Closes #${{ github.event.issue.number }}
+
+          _Draft PR auto-created from an issue tag. Land the real fix here._
+          EOF
+          )
+          # Re-use an existing open PR for this branch instead of erroring.
+          existing=$(gh pr list --head "$branch" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then
+            gh pr edit "$existing" --title "$title" --body "$body"
+            echo "Updated PR https://github.com/${{ github.repository }}/pull/$existing"
+          else
+            gh pr create \
+              --base main \
+              --head "$branch" \
+              --title "$title" \
+              --body "$body" \
+              --draft
+            echo "Draft PR created"
+          fi
